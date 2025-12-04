@@ -1,10 +1,9 @@
+import type { CrawlerDimensions } from "../../../shared/types/SharedTypes";
 import type { PlayerType } from "../../Actors/Player/types/PlayerTypes";
+import type { MapType } from "../../Map/types/MapTypes";
 
-export type CanvasDimensions = {
-    width: number;
-    height: number;
-};
 
 export type GameCanvasProps = {
     player: PlayerType;
-} & CanvasDimensions;
+    map: MapType;
+} & CrawlerDimensions;

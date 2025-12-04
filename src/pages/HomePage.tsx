@@ -1,7 +1,7 @@
-import GameContainer from "../components/GameCanvas/components/GameContainer";
+import GameCanvas from "../components/GameCanvas/components/GameCanvas";
 
 export default function HomePage() {
     return (
-        <GameContainer/>
+        <GameCanvas/>
     );
 }

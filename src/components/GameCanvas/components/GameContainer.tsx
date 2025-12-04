@@ -1,23 +1,19 @@
 import { useEffect, useState } from "react";
 import GameCanvas from "./GameCanvas";
 import { type CanvasDimensions } from "../types/GameCanvasTypes";
+import type { PlayerType } from "../../Actors/Player/types/PlayerTypes";
+import usePlayerMovement from "../../Actors/Player/hooks/usePlayerMovement";
 
-// const player: PlayerType = ({
-//     x: 100,
-//     y: 150,
-//     kind: ACTOR_TYPES.PLAYER,
-//     radius: 20,
-//     color: "red",
-//     hp: 100,
-// });
+const initialPlayer: PlayerType = {
+  kind: "player",
+  x: 10,
+  y: 10,
+  radius: 20,
+  color: "dodgerblue",
+  hp: 100,
+}
 
-// const initialCanvas: CanvasProps = {
-//     background: "black",
-//     player: player,
-//     ctx: null,
-//     width: 0,
-//     height: 0
-// };
+const speed: number = 5;
 
 export default function GameContainer() {
 
@@ -25,6 +21,8 @@ export default function GameContainer() {
         width: window.innerWidth,
         height: window.innerHeight,
     });
+    const player = usePlayerMovement(initialPlayer, speed);
+
 
     // handle resize
     useEffect(() => {
@@ -43,6 +41,7 @@ export default function GameContainer() {
         <GameCanvas 
             width={viewport.width}
             height={viewport.height}
+            player={player}
         />
     );
 };

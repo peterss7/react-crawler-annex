@@ -1,6 +1,5 @@
-import type { BaseActorType } from "../../../../shared/types/SharedActorTypes";
+import type { BaseActor } from "../../types/ActorTypes";
 
-// 2) Concrete types
-export type PlayerType = BaseActorType<"player"> & {
+export type PlayerType = BaseActor<"player"> & {
     hp: number;
-};
+}

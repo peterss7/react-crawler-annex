@@ -5,12 +5,15 @@ import type { PlayerType } from "../../Actors/Player/types/PlayerTypes";
 import usePlayerMovement from "../../Actors/Player/hooks/usePlayerMovement";
 
 const initialPlayer: PlayerType = {
-  kind: "player",
-  x: 10,
-  y: 10,
-  radius: 20,
-  color: "dodgerblue",
-  hp: 100,
+    kind: "player",
+    x: 10,
+    y: 10,
+    radius: 20,
+    color: "dodgerblue",
+    hp: 100,
+    spriteSrc: "/player.png",  
+    spriteOffsetX: 0,
+    spriteOffsetY: 0,
 }
 
 const speed: number = 5;
@@ -38,7 +41,7 @@ export default function GameContainer() {
     }, []);
 
     return (
-        <GameCanvas 
+        <GameCanvas
             width={viewport.width}
             height={viewport.height}
             player={player}

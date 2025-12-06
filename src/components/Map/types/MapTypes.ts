@@ -5,6 +5,10 @@ export type MapType = {
     height: number;    
 } 
 
+export type MapTileType = {
+    spriteKey: TileKey
+}
+
 
 export type TileKey = 
     "floor" |
@@ -16,12 +20,5 @@ export type TileKey =
     "wallt" |
     "walltr" |
     "wallr";
-    // "watersq1" |
-    // "watersq2" |
-    // "watersq3" |
-    // "watersq4" |
-    // "waterh1" |
-    // "waterh2" |
-    // "waterv1" |
-    // "waterv2";
+    
 export type SpriteMapType = Partial<Record<TileKey, HTMLImageElement>>;

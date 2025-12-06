@@ -1,29 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useCanvasUtilities } from "../hooks/useCanvasUtilities";
 import { useDrawPlayer } from "../../Actors/Player/hooks/useDrawPlayer";
-import type { PlayerType } from "../../Actors/Player/types/PlayerTypes";
-import usePlayer from "../../Actors/Player/hooks/usePlayer";
 import { Canvas } from "../styles/GameCanvasStyles";
 import { MAP_COLS, MAP_DATA, MAP_FLOOR_SRC, MAP_ROWS, MAP_WALL_B_SRC, MAP_WALL_BL_SRC, MAP_WALL_BR_SRC, MAP_WALL_L_SRC, MAP_WALL_R_SRC, MAP_WALL_T_SRC, MAP_WALL_TL_SRC, MAP_WALL_TR_SRC, TILE_SIZE } from "../../Map/constants/MapConfigConstants";
 import { useTileSprites } from "../../Map/hooks/useTileSprites";
+import { usePlayerContext } from "../../Actors/Player/hooks/usePlayerContext";
 
 
-const initialPlayer: PlayerType = {
-  kind: "player",
-  x: 10,
-  y: 10,
-  radius: 20,
-  color: "dodgerblue",
-  hp: 100,
-  spriteSrc: "/img/player.png",
-  spriteOffsetX: 0,
-  spriteOffsetY: 0,
-}
 
-const speed: number = 5;
 
 export default function GameCanvas() {
-  const { player, sprite: playerImage } = usePlayer(initialPlayer, speed);
+  const { player, sprite: playerImage } = usePlayerContext();
   const tileSprites = useTileSprites({
     floor: MAP_FLOOR_SRC,
     wallb: MAP_WALL_B_SRC,

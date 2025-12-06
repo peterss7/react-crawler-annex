@@ -9,10 +9,12 @@ export function useTileSprites(sources: Record<TileKey, string>) {
 
         Object.entries(sources).forEach(([key, src]) => {
             const img = new Image();
+            console.log(`img key: ${key}, src: ${src}`);
             img.src = src;
             img.onload = () => {
                 if (cancelled) return;
                 setSprites((prev) => ({ ...prev, [key]: img as HTMLImageElement }));
+                console.log(`Sprite set`);
             };
         });
 

@@ -1,39 +1,43 @@
 
-export const TILE_SIZE = 85;
+export const TILE_SIZE = 75;
 
 export const MAP_COLS = 16;
 export const MAP_ROWS = 8;
 
-// 0 = floor, 1 = wall, 2 = water (whatever you want)
+
 export const MAP_DATA: number[][] = [
-    [5, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 6],
-    [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9],
-    [3, 0, 0, 0, 12, 13, 0, 0, 11, 0, 0, 0, 0, 0, 0, 9],
-    [3, 0, 0, 0, 14, 15, 0, 0, 10, 0, 0, 0, 2, 0, 0, 9],
-    [3, 0, 0, 0, 0, 16, 17, 0, 0, 0, 0, 0, 0, 0, 0, 9],
-    [3, 0, 16, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9],
-    [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9],
-    [4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7],
+    [5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7],
+    [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8],
+    [4, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8],
+    [4, 0, 0, 0, 4, 5, 0, 0, 0, 0, 0, 0, 2, 0, 0, 8],
+    [4, 0, 0, 0, 0, 6, 7, 0, 0, 0, 0, 0, 0, 0, 0, 8],
+    [4, 0, 6, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8],
+    [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8],
+    [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
 ];
 
-export const MAP_WALL_B_SRC: string = "/img/wall-bottom.png";
-export const MAP_WALL_T_SRC: string = "/img/wall-top.png";
-export const MAP_WALL_L_SRC: string = "/img/wall-left.png";
-export const MAP_WALL_R_SRC: string = "/img/wall-right.png";
-export const MAP_WALL_C_SRC: string = "/img/wall-corner.png";
-export const MAP_WALL_C2_SRC: string = "/img/wall-corner2.png";
-export const MAP_WALL_C3_SRC: string = "/img/wall-corner3.png";
-export const MAP_WALL_C4_SRC: string = "/img/wall-corner4.png";
-export const MAP_FLOOR_SRC: string = "/img/floor.png";
+export const MAP_FLOOR_SRC: string =  "/img/FLOOR_1.png";
 
-export const MAP_WATER_SRC: string = "/img/water-singular.png";
-export const MAP_WATER_V_1_2_SRC: string = "/img/water-vertical-1-2.png";
-export const MAP_WATER_V_2_2_SRC: string = "/img/water-vertical-2-2.png";
+export const MAP_WALL_B_SRC: string = "/img/WALL_3.png";
+export const MAP_WALL_BL_SRC: string = "/img/WALL_7.png";
+export const MAP_WALL_BR_SRC: string = "/img/WALL_8.png";
+export const MAP_WALL_L_SRC: string = "/img/WALL_1.png";
+export const MAP_WALL_TL_SRC: string = "/img/WALL_5.png";
 
-export const MAP_WATER_SQ_1_4_SRC: string = "/img/water-sq-1-4.png";
-export const MAP_WATER_SQ_2_4_SRC: string = "/img/water-sq-2-4.png";
-export const MAP_WATER_SQ_3_4_SRC: string = "/img/water-sq-3-4.png";
-export const MAP_WATER_SQ_4_4_SRC: string = "/img/water-sq-4-4.png";
+export const MAP_WALL_R_SRC: string = "/img/WALL_2.png";
+export const MAP_WALL_T_SRC: string = "/img/WALL_4.png";
+export const MAP_WALL_TR_SRC: string = "/img/WALL_6.png";
 
-export const MAP_WATER_H_1_2_SRC: string = "/img/water-rect-1-2.png";
-export const MAP_WATER_H_2_2_SRC: string = "/img/water-rect-2-2.png";
+
+// export const MAP_WATER_SRC: string = "/img/WATER-0x0.png";
+
+// export const MAP_WATER_V_0_2_SRC: string = "/img/WATER-0x2V_0.png";
+// export const MAP_WATER_V_2_2_SRC: string = "/img/WATER-0x2V_2.png";
+
+// export const MAP_WATER_SQ_0_4_SRC: string = "/img/WATER-2x2_0.png";
+// export const MAP_WATER_SQ_2_4_SRC: string = "/img/WATER-2x2_2.png";
+// export const MAP_WATER_SQ_3_4_SRC: string = "/img/WATER-2x2_3.png";
+// export const MAP_WATER_SQ_4_4_SRC: string = "/img/WATER-2x2_4.png";
+
+// export const MAP_WATER_H_0_2_SRC: string = "/img/WATER-0x2H_0.png";
+// export const MAP_WATER_H_2_2_SRC: string = "/img/WATER-0x2H_2.png";

@@ -15,7 +15,7 @@ const initialPlayer: PlayerType = {
     spriteOffsetY: 0,
 }
 
-const speed = 5;
+const speed = 2;
 
 export default function HomePage() {
     return (

@@ -28,16 +28,5 @@ export const MAP_WALL_R_SRC: string = "/img/WALL_2.png";
 export const MAP_WALL_T_SRC: string = "/img/WALL_4.png";
 export const MAP_WALL_TR_SRC: string = "/img/WALL_6.png";
 
-
-// export const MAP_WATER_SRC: string = "/img/WATER-0x0.png";
-
-// export const MAP_WATER_V_0_2_SRC: string = "/img/WATER-0x2V_0.png";
-// export const MAP_WATER_V_2_2_SRC: string = "/img/WATER-0x2V_2.png";
-
-// export const MAP_WATER_SQ_0_4_SRC: string = "/img/WATER-2x2_0.png";
-// export const MAP_WATER_SQ_2_4_SRC: string = "/img/WATER-2x2_2.png";
-// export const MAP_WATER_SQ_3_4_SRC: string = "/img/WATER-2x2_3.png";
-// export const MAP_WATER_SQ_4_4_SRC: string = "/img/WATER-2x2_4.png";
-
-// export const MAP_WATER_H_0_2_SRC: string = "/img/WATER-0x2H_0.png";
-// export const MAP_WATER_H_2_2_SRC: string = "/img/WATER-0x2H_2.png";
+export const WORLD_WIDTH = MAP_COLS * TILE_SIZE;
+export const WORLD_HEIGHT = MAP_ROWS * TILE_SIZE;

@@ -2,16 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { useCanvasUtilities } from "../hooks/useCanvasUtilities";
 import { Canvas } from "../styles/GameCanvasStyles";
 import { usePlayerContext } from "../../Actors/Player/hooks/usePlayerContext";
-import useMap from "../../Map/hooks/useMap";
-import { WORLD_WIDTH, WORLD_HEIGHT } from "../../Map/constants/MapConfigConstants";
+import { WORLD_WIDTH, WORLD_HEIGHT, MAP_COLS, MAP_DATA, MAP_ROWS, TILE_SIZE } from "../../Map/constants/MapConfigConstants";
+import { useMapContext } from "../../Map/hooks/useMapContext";
 
 
 
 
 export default function GameCanvas() {
-  const { drawPlayer, player } = usePlayerContext();
-  const { drawMap } = useMap();
-  
+  const { player, drawPlayer } = usePlayerContext();
+  const { drawMap, drawBorder } = useMapContext();
+
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [height, setHeight] = useState<number>(window.innerHeight);
   const [zoom, setZoom] = useState<number>(2);
@@ -41,9 +41,24 @@ export default function GameCanvas() {
     canvas.width = width;
     canvas.height = height;
 
-    // CAMERA 
-    const viewWorldWidth = width / zoom;
-    const viewWorldHeight = height / zoom;
+    // background for whole screen
+    drawBackground(ctx, width, height);
+
+    // ----- define where the map lives on the canvas -----
+    const mapRect = {
+      x: 125,
+      y: 25,
+      width: width - 200,
+      height: height - 100,
+    };
+
+    // draw a panel around the map (optional)
+    ctx.fillStyle = "#111";
+    ctx.fillRect(mapRect.x, mapRect.y, mapRect.width, mapRect.height);
+
+    // camera size is now based on the *mapRect* size, not the whole screen
+    const viewWorldWidth = mapRect.width / zoom;
+    const viewWorldHeight = mapRect.height / zoom;
 
     let cameraX = player.x - viewWorldWidth / 2;
     let cameraY = player.y - viewWorldHeight / 2;
@@ -51,22 +66,15 @@ export default function GameCanvas() {
     cameraX = clamp(cameraX, 0, Math.max(0, WORLD_WIDTH - viewWorldWidth));
     cameraY = clamp(cameraY, 0, Math.max(0, WORLD_HEIGHT - viewWorldHeight));
 
-    drawBackground(ctx, width, height);
+    // ===== draw map tiles inside mapRect =====
+    drawMap({ cameraX, cameraY, viewWorldWidth, viewWorldHeight, zoom, ctx, mapRect });
 
-    // DRAW MAP
+    // ===== draw player inside mapRect =====
+    drawPlayer({ ctx, cameraX, cameraY, zoom, mapRect });
 
-    drawMap({
-      cameraX: cameraX,
-      cameraY: cameraY,
-      viewWorldWidth: viewWorldWidth,
-      viewWorldHeight: viewWorldHeight,
-      ctx: ctx, zoom: zoom
-    });
+    // ===== draw map border =====
+    drawBorder({ctx, width, height, mapRect});
 
-    
-    // DRAW PLAYER
-    drawPlayer({ ctx: ctx, cameraX: cameraX, cameraY: cameraY, zoom: zoom});
-    
   }, [width, height, zoom, player]);
 
   return (
@@ -74,10 +82,4 @@ export default function GameCanvas() {
       ref={canvasRef}
     />
   )
-
-
 };
-
-function clamp(cameraX: number, arg1: number, arg2: number): number {
-  throw new Error("Function not implemented.");
-}

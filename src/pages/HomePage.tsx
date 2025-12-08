@@ -1,12 +1,13 @@
 import { PlayerProvider } from "../components/Actors/Player/hooks/usePlayerContext";
 import type { PlayerType } from "../components/Actors/Player/types/PlayerTypes";
 import GameCanvas from "../components/GameCanvas/components/GameCanvas";
+import { MapProvider } from "../components/Map/hooks/useMapContext";
 
 
 const initialPlayer: PlayerType = {
     kind: "player",
-    x: 10,
-    y: 10,
+    x: 200,
+    y: 200,
     radius: 20,
     color: "dodgerblue",
     hp: 100,
@@ -19,8 +20,10 @@ const speed = 2;
 
 export default function HomePage() {
     return (
-        <PlayerProvider initialPlayer={initialPlayer} speed={speed}>
-            <GameCanvas />
-        </PlayerProvider>
+        <MapProvider>
+            <PlayerProvider initialPlayer={initialPlayer} speed={speed}>
+                <GameCanvas />
+            </PlayerProvider>
+        </MapProvider>
     );
 }

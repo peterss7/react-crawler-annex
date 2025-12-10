@@ -9,6 +9,8 @@ export function useSprite(src: string | null) {
             return;
         }
 
+        console.log(src);
+
         const img = new Image();
         img.src = src;
         img.onload = () => setImage(img);

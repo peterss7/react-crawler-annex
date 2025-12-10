@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
-import type { PlayerType } from "../types/PlayerTypes"
+import type { PlayerType, SpriteDirection } from "../types/PlayerTypes"
 import useArrowKeys from "./useArrowKeys";
 import { useSprite } from "../../../../shared/hooks/useSprite";
 import { useMapContext } from "../../../Map/hooks/useMapContext";
@@ -17,7 +17,7 @@ type DrawPlayerProps = {
 type PlayerContextValue = {
     drawPlayer: (props: DrawPlayerProps) => void;
     player: PlayerType;
-    sprite: HTMLImageElement | null;
+    activeSprite: HTMLImageElement | null;
 }
 
 const PlayerContext = createContext<PlayerContextValue | undefined>(undefined);
@@ -34,9 +34,18 @@ export function PlayerProvider({
     speed
 }: PlayerProviderProps) {
     const [player, setPlayer] = useState<PlayerType>(initialPlayer);
+    const [activeSprite, setActiveSprite] = useState<HTMLImageElement | null>(null);
+    // const sprite = useSprite(player.spriteSrcs.up);
+
+    const sprites = (Object.entries(player.spriteSrcs) as [SpriteDirection, string][])
+        .map(([key, value]) => ({
+            key, 
+            sprite: useSprite(value),
+        }));
 
     const keys = useArrowKeys();
-    const sprite: HTMLImageElement | null = useSprite(player.spriteSrc);
+
+    // const sprite: HTMLImageElement | null = useSprite(player.spriteSrc);
     const { isWalkable } = useMapContext();
 
     useEffect(() => {
@@ -49,23 +58,37 @@ export function PlayerProvider({
                 let nextX = x;
                 let nextY = y;
 
-                if (keys.ArrowUp) nextY -= speed;
-                if (keys.ArrowDown) nextY += speed;
-                if (keys.ArrowLeft) nextX -= speed;
-                if (keys.ArrowRight) nextX += speed;
+                if (keys.ArrowUp) {
+                    nextY -= speed;
+                    setActiveSprite(sprites[0].sprite);
+                }
+                if (keys.ArrowDown) {
+                    nextY += speed;
+                    setActiveSprite(sprites[0].sprite);
+                }
+                if (keys.ArrowLeft) {
+                    nextX -= speed;
+                    const t: HTMLImageElement | null = sprites.find(x => x.key === "left")?.sprite ?? null;
+                    setActiveSprite(t);
+                }
+                if (keys.ArrowRight) {
+                    nextX += speed;
+                    const t: HTMLImageElement | null = sprites.find(x => x.key === "right")?.sprite ?? null;
+                    setActiveSprite(t);
+                }
 
-                if (nextX !== x && isWalkable(nextX, y)){
+                if (nextX !== x && isWalkable(nextX, y)) {
                     x = nextX;
                     console.log("walkable X");
                 }
 
-                if (nextY !== y && isWalkable(x, nextY )) {
+                if (nextY !== y && isWalkable(x, nextY)) {
                     y = nextY;
                     console.log("walkable Y");
                 }
-                
+
                 if (x === prevState.x && y === prevState.y) return prevState;
-                
+
                 return { ...prevState, x, y };
             });
 
@@ -86,12 +109,12 @@ export function PlayerProvider({
         const playerScreenY = mapRect.y + (worldY - cameraY) * zoom;
         const size = player.radius * 2 * zoom;
 
-        if (sprite) {
+        if (activeSprite) {
             const drawX =
                 playerScreenX - size / 2 + (player.spriteOffsetX ?? 0) * zoom;
             const drawY =
                 playerScreenY - size / 2 + (player.spriteOffsetY ?? 0) * zoom;
-            ctx.drawImage(sprite, drawX, drawY, size, size);
+            ctx.drawImage(activeSprite, drawX, drawY, size, size);
         } else {
             ctx.fillStyle = player.color;
             ctx.beginPath();
@@ -99,45 +122,10 @@ export function PlayerProvider({
             ctx.fill();
         }
 
-        // const worldX = player.x;
-        // const worldY = player.y;
-
-        // const playerScreenX = mapRect.x + (worldX - cameraX) * zoom;
-        // const playerScreenY = mapRect.y + (worldY - cameraY) * zoom;
-        // const size = player.radius * 2 * zoom;
-
-        // if (sprite) {
-        //     const drawX = playerScreenX - size / 2 + (player.spriteOffsetX ?? 0) * zoom;
-        //     const drawY = playerScreenY - size / 2 + (player.spriteOffsetY ?? 0) * zoom;
-        //     ctx.drawImage(sprite, drawX, drawY, size, size);
-        // } else {
-        //     ctx.fillStyle = player.color;
-        //     ctx.beginPath();
-        //     ctx.arc(playerScreenX, playerScreenY, player.radius * zoom, 0, Math.PI * 2);
-        //     ctx.fill();
-        // }
-
-        // const playerWorldX = player.x;
-        // const playerWorldY = player.y;
-
-        // const playerScreenX = (playerWorldX - cameraX) * zoom;
-        // const playerScreenY = (playerWorldY - cameraY) * zoom;
-        // const size = player.radius * 2 * zoom;
-
-        // if (sprite) {
-        //     const drawX = playerScreenX - size / 2 + (player.spriteOffsetX ?? 0) * zoom;
-        //     const drawY = playerScreenY - size / 2 + (player.spriteOffsetY ?? 0) * zoom;
-        //     ctx.drawImage(sprite, drawX, drawY, size, size);
-        // } else {
-        //     ctx.fillStyle = player.color;
-        //     ctx.beginPath();
-        //     ctx.arc(playerScreenX, playerScreenY, player.radius * zoom, 0, Math.PI * 2);
-        //     ctx.fill();
-        // }
     }
 
     return (
-        <PlayerContext.Provider value={{ drawPlayer, player, sprite }}>
+        <PlayerContext.Provider value={{ drawPlayer, player, activeSprite }}>
             {children}
         </PlayerContext.Provider>
     );
